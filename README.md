@@ -1,2 +1,2 @@
 # gerenciadordeaulas
-Inicialmente criado para atender uma demanda do professor de dança Marcos Afonso de ter um controle de preseça dos seus alunos nas aulas.
+Inicialmente criado para atender à demanda do professor de dança Marcos Afonso de ter o controle da presença dos seus alunos nas aulas.
