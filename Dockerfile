@@ -13,7 +13,6 @@ RUN groupadd -r appuser && useradd -r -g appuser appuser
 
 # Copy built application from builder
 COPY --from=builder /app/target/gerenciadoraulas-*.jar /app/gerenciadoraulas.jar
-COPY --from=builder /app/target/gerenciadoraulas-*.jar.original /app/gerenciadoraulas-original.jar 2>/dev/null || true
 
 # Set environment variables
 ENV JAVA_OPTS="-Xmx512m -Xms256m -XX:+UseG1GC -XX:+ParallelRefProcEnabled"
@@ -23,9 +22,8 @@ ENV APP_PORT=8080
 EXPOSE ${APP_PORT}
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD java -cp /app/gerenciadoraulas.jar org.springframework.boot.loader.PropertiesLauncher \
-    -Dspring.boot.application.launch=false -Dspring.boot.health.endpoint=/actuator/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+    CMD java -jar /app/gerenciadoraulas.jar --help || exit 1
 
 # Run as non-root user
 USER appuser
