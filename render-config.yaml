@@ -1,0 +1,275 @@
+# Render.com Infrastructure as Code
+# Use este arquivo para deploy programático via Render CLI ou Web
+
+# ====================================
+# WEB SERVICE - APLICAÇÃO SPRING BOOT
+# ====================================
+web-service:
+  name: gerenciadordeaulas
+  plan: free  # ou starter, standard, pro
+  region: south-america  # ou seu regional
+  runtime: docker
+  dockerfile: Dockerfile
+  
+  build:
+    # Render detecta automaticamente via Dockerfile
+    # Nenhuma configuração adicional necessária
+  
+  start_command: "" # Usa ENTRYPOINT do Dockerfile
+  
+  environment:
+    # ===============================
+    # SERVIDOR
+    # ===============================
+    - name: SERVER_PORT
+      value: "10000"  # Porta fixa do Render
+    
+    - name: SPRING_APPLICATION_NAME
+      value: "EscolaGerenciamentoDeAulas"
+    
+    # ===============================
+    # BANCO DE DADOS
+    # ===============================
+    # Use valores do PostgreSQL criado no Render
+    - name: SPRING_DATASOURCE_URL
+      sync_with_database: gerenciadordeaulas-db  # Automático!
+    
+    - name: SPRING_DATASOURCE_USERNAME
+      sync_with_database: gerenciadordeaulas-db
+    
+    - name: SPRING_DATASOURCE_PASSWORD
+      sync_with_database: gerenciadordeaulas-db
+    
+    - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+      value: "org.postgresql.Driver"
+    
+    # ===============================
+    # JPA / HIBERNATE
+    # ===============================
+    - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+      value: "validate"  # NUNCA create/update em produção
+    
+    - name: SPRING_JPA_SHOW_SQL
+      value: "false"  # Nunca log SQL em produção
+    
+    - name: SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL
+      value: "false"
+    
+    - name: SPRING_JPA_DATABASE_PLATFORM
+      value: "org.hibernate.dialect.PostgreSQLDialect"
+    
+    # ===============================
+    # CONNECTION POOL
+    # ===============================
+    - name: SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE
+      value: "5"
+    
+    - name: SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE
+      value: "20"
+    
+    - name: SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
+      value: "3000"
+    
+    - name: SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT
+      value: "600000"
+    
+    - name: SPRING_DATASOURCE_HIKARI_MAX_LIFETIME
+      value: "1800000"
+    
+    - name: SPRING_DATASOURCE_HIKARI_POOL_NAME
+      value: "GerenciadorDeAulasPool"
+    
+    # ===============================
+    # JAVA
+    # ===============================
+    - name: JAVA_OPTS
+      value: "-Xmx512m -Xms256m -XX:+UseG1GC -XX:+ParallelRefProcEnabled"
+  
+  health_check:
+    path: /actuator/health
+    timeout_seconds: 60  # Aumentado para Java startup
+    poll_interval_seconds: 30
+  
+  auto_deploy: true
+  branch: main
+  
+  # Root dockerfile path
+  dockerfile_path: Dockerfile
+
+# ====================================
+# BANCO DE DADOS - POSTGRESQL
+# ====================================
+database:
+  name: gerenciadordeaulas-db
+  database_name: gerenciadordeaulas
+  username: postgres
+  # Password é gerada automaticamente e guardada em segurança
+  
+  plan: free  # ou starter, standard
+  region: south-america  # mesmo da app
+  
+  postgres_version: 16  # Última versão stable
+  
+  high_availability: false  # true para plan pago
+  
+  backup:
+    retention_days: 7  # free tier
+    # starter tier = 30 dias
+
+# ====================================
+# INTEGRAÇÃO - AUTO DEPLOY
+# ====================================
+integrations:
+  github:
+    repo: cfabioramos/gerenciadordeaulas
+    branch: main
+    deploy_on_push: true
+    
+    # Opcional: Deploy com branch específica
+    # production_branch: main
+    # staging_branch: develop
+
+# ====================================
+# MONITORAMENTO E ALERTAS
+# ====================================
+monitoring:
+  enable_metrics: true
+  
+  alerts:
+    - name: "App Crashed"
+      condition: "status == failed"
+      notification: email
+    
+    - name: "High Memory"
+      condition: "memory_usage > 80%"
+      notification: email
+    
+    - name: "Slow Requests"
+      condition: "response_time > 5000ms"
+      notification: email
+
+# ====================================
+# SEGURANÇA
+# ====================================
+security:
+  # SSL/TLS automático via Let's Encrypt
+  ssl: enabled
+  
+  # Variáveis sensíveis são criptografadas
+  environment_encryption: enabled
+  
+  # Logs não contêm senhas
+  sensitive_data_masking: enabled
+
+# ====================================
+# DEPLOYMENT STRATEGY
+# ====================================
+deployment:
+  strategy: rolling  # ou blue-green, canary
+  max_concurrent: 1
+  
+  # Rollback automático se health check falhar
+  auto_rollback: true
+  rollback_threshold: 5  # tentativas antes de rollback
+
+# ====================================
+# LIMITES DE RECURSOS
+# ====================================
+resources:
+  # Free tier
+  memory: 100  # MB (starter = 512MB)
+  cpu: shared
+  
+  # Com autoscaling (plan pago)
+  # auto_scaling:
+  #   min_instances: 1
+  #   max_instances: 5
+  #   target_cpu: 70%
+
+# ====================================
+# LOGS E OBSERVABILIDADE
+# ====================================
+logging:
+  retention_days: 7
+  
+  # Integração com serviços externos (pago)
+  # integrations:
+  #   - datadog
+  #   - new_relic
+  #   - sentry
+
+# ====================================
+# NETWORKING
+# ====================================
+networking:
+  # Public URL fornecido automaticamente
+  # gerenciadordeaulas-xxxx.onrender.com
+  
+  # Custom domain (opcional)
+  # custom_domain: api.seudominio.com.br
+  
+  # Environment-specific URLs
+  preview_urls: true  # para PRs
+  
+  # WAF e DDoS (starter+)
+  # waf_enabled: true
+
+# ====================================
+# BACKUP E DISASTER RECOVERY
+# ====================================
+disaster_recovery:
+  database_backups: true
+  
+  backup_schedule:
+    frequency: daily
+    time: "02:00 UTC"  # 2 AM UTC
+  
+  # Replicação automática (starter+)
+  # replication: enabled
+  # replication_region: us-west
+
+# ====================================
+# PIPELINE CI/CD
+# ====================================
+cicd:
+  # Render executa o Dockerfile
+  build_trigger: on_push
+  
+  build_steps:
+    - name: "Build Docker Image"
+      command: "docker build -t app ."
+    
+    - name: "Run Tests" (opcional)
+      command: "docker run app mvn test"
+  
+  deploy_trigger:
+    condition: "build_success && health_check_pass"
+    timeout: 600  # 10 minutos
+
+# ====================================
+# NOTIFICAÇÕES
+# ====================================
+notifications:
+  # Slack (opcional)
+  # slack_webhook: https://hooks.slack.com/...
+  
+  # Email automático para
+  email_on_deploy: true
+  email_on_failure: true
+
+# ====================================
+# DOCUMENTAÇÃO E REFERÊNCIAS
+# ====================================
+# Mais informações:
+# - https://render.com/docs
+# - https://render.com/docs/docker
+# - https://render.com/docs/deploy-postgres
+# - https://render.com/docs/health-checks
+# 
+# Variáveis de ambiente Render:
+# - RENDER_GIT_REPO: URL do repositório
+# - RENDER_GIT_BRANCH: Branch ativo
+# - RENDER_GIT_COMMIT: Commit SHA
+# - RENDER_INSTANCE_ID: ID único do container
+# - RENDER_SERVICE_ID: ID do serviço
+# - PORT: Porta (sempre 10000 para web)
