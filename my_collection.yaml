@@ -1,0 +1,58 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: My Collection
+meta:
+  id: wrk_88ee7c2f05ce4c33989d1137588e9eac
+  created: 1785797714853
+  modified: 1785797714853
+  description: ""
+collection:
+  - url: http://localhost:8080/matriculas/programaAula/1
+    name: Alunos Matriculados
+    meta:
+      id: req_ca53fefe7f484c7c80c9bd4c16135515
+      created: 1785797724032
+      modified: 1785803401284
+      isPrivate: false
+      description: ""
+      sortKey: -1785797724032
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/alunos/nao-matriculados/1
+    name: Alunos não Matriculados
+    meta:
+      id: req_80b7555529834b118f1465c94d973ca5
+      created: 1785803403090
+      modified: 1785803447973
+      isPrivate: false
+      description: ""
+      sortKey: -1785803403090
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_809412a592327fe552d5c39feb2d795896b64d5e
+    created: 1785797714871
+    modified: 1785797714871
+environments:
+  name: Base Environment
+  meta:
+    id: env_809412a592327fe552d5c39feb2d795896b64d5e
+    created: 1785797714868
+    modified: 1785797714868
+    isPrivate: false

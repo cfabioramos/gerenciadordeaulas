@@ -1,0 +1,80 @@
+-- ============================
+-- TABELA: Ciclo
+-- ============================
+CREATE TABLE ciclo (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL
+);
+
+-- ============================
+-- TABELA: Aula
+-- Cada aula pertence a um ciclo (* x 1)
+-- ============================
+CREATE TABLE aula (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    data DATE NOT NULL,
+    ciclo_id INT NOT NULL,
+    CONSTRAINT fk_aula_ciclo FOREIGN KEY (ciclo_id) REFERENCES ciclo (id) ON DELETE CASCADE
+);
+
+-- ============================
+-- TABELA: Aluno
+-- ============================
+CREATE TABLE aluno (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+-- ============================
+-- TABELA: Matrícula
+-- Relaciona aluno ↔ ciclo (* x *)
+-- ============================
+CREATE TABLE matricula (
+    id SERIAL PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    ciclo_id INT NOT NULL,
+    data DATE NOT NULL DEFAULT CURRENT_DATE,
+    CONSTRAINT fk_matricula_aluno FOREIGN KEY (aluno_id) REFERENCES aluno (id) ON DELETE CASCADE,
+    CONSTRAINT fk_matricula_ciclo FOREIGN KEY (ciclo_id) REFERENCES ciclo (id) ON DELETE CASCADE,
+    CONSTRAINT uq_matricula UNIQUE (aluno_id, ciclo_id) -- evita duplicidade
+);
+
+-- ============================
+-- TABELA: Presença
+-- Relaciona matrícula ↔ aula (* x *)
+-- ============================
+CREATE TABLE presenca (
+    id SERIAL PRIMARY KEY,
+    aula_id INT NOT NULL,
+    matricula_id INT NOT NULL,
+    CONSTRAINT fk_presenca_aula FOREIGN KEY (aula_id) REFERENCES aula (id) ON DELETE CASCADE,
+    CONSTRAINT fk_presenca_matricula FOREIGN KEY (matricula_id) REFERENCES matricula (id) ON DELETE CASCADE,
+    CONSTRAINT uq_presenca UNIQUE (aula_id, matricula_id) -- evita duplicidade
+);
+
+-- ============================
+-- EXEMPLOS DE INSERÇÃO
+-- ============================
+
+-- Ciclo
+INSERT INTO ciclo (nome, data_inicio, data_fim)
+VALUES ('3/2026 UFBA', '2026-07-01', '2026-10-31');
+
+-- Aula
+INSERT INTO aula (nome, data, ciclo_id)
+VALUES ('UFBA Sábado 01/08', '2026-08-01', 1);
+
+-- Aluno
+INSERT INTO aluno (nome)
+VALUES ('Carlos Fábio');
+
+-- Matrícula
+INSERT INTO matricula (aluno_id, ciclo_id, data)
+VALUES (1, 1, CURRENT_DATE);
+
+-- Presença
+INSERT INTO presenca (aula_id, matricula_id)
+VALUES (1, 1);

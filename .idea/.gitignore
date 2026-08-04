@@ -9,3 +9,8 @@
 /dataSources/
 /dataSources.local.xml
 /modules.xml
+/jarRepositories.xml
+/encodings.xml
+/dataSources.xml
+/compiler.xml
+/sqldialects.xml
