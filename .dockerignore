@@ -1,0 +1,13 @@
+.git
+.gitignore
+.idea
+.mvn/wrapper/maven-wrapper.jar
+target
+*.iml
+*.log
+node_modules
+.DS_Store
+.vscode
+.env.local
+.env.*.local
+spring-boot-docker.iml

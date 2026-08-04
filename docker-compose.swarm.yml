@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database - Docker Swarm with Secrets
+  postgres:
+    image: postgres:16-alpine
+    container_name: gerenciadordeaulas-db-swarm
+    environment:
+      POSTGRES_DB_FILE: /run/secrets/db_name
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_swarm_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - gerenciadordeaulas-network
+    secrets:
+      - db_name
+      - db_user
+      - db_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/db_user) -d $$(cat /run/secrets/db_name)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Spring Boot Application - Docker Swarm with Secrets
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gerenciadordeaulas:latest
+    container_name: gerenciadordeaulas-app-swarm
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Server Configuration
+      SERVER_PORT: "8080"
+      SPRING_APPLICATION_NAME: "EscolaGerenciamentoDeAulas"
+      
+      # Database Configuration - URL só tem o hostname
+      # Username e password vêm dos secrets
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://ep-cold-pine-axkrxua6.c-4.us-east-2.aws.neon.tech:5432/gerenciadordeaulas"
+      SPRING_DATASOURCE_USERNAME_FILE: /run/secrets/db_user
+      SPRING_DATASOURCE_PASSWORD_FILE: /run/secrets/db_password
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
+      
+      # JPA/Hibernate Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: "validate"
+      SPRING_JPA_SHOW_SQL: "false"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "false"
+      SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.PostgreSQLDialect"
+      
+      # Connection Pool
+      SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE: "5"
+      SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE: "20"
+      SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT: "3000"
+      SPRING_DATASOURCE_HIKARI_IDLE_TIMEOUT: "600000"
+      SPRING_DATASOURCE_HIKARI_MAX_LIFETIME: "1800000"
+      SPRING_DATASOURCE_HIKARI_POOL_NAME: "GerenciadorDeAulasPool"
+      
+      # Java Options
+      JAVA_OPTS: "-Xmx1024m -Xms512m -XX:+UseG1GC -XX:+ParallelRefProcEnabled"
+    ports:
+      - "8080:8080"
+    networks:
+      - gerenciadordeaulas-network
+    secrets:
+      - db_name
+      - db_user
+      - db_password
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "com.gerenciadordeaulas.description=Gerenciador de Aulas API"
+      - "com.gerenciadordeaulas.version=0.0.1"
+
+# Secrets - referenciadas como externas (criadas via CLI)
+secrets:
+  db_name:
+    external: true
+    name: gerenciadordeaulas_db_name
+  db_user:
+    external: true
+    name: gerenciadordeaulas_db_user
+  db_password:
+    external: true
+    name: gerenciadordeaulas_db_password
+
+volumes:
+  postgres_swarm_data:
+    driver: local
+
+networks:
+  gerenciadordeaulas-network:
+    driver: bridge
