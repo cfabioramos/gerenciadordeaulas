@@ -8,6 +8,7 @@ services:
     container_name: gerenciadordeaulas-app-prod
     environment:
       SERVER_PORT: ${SERVER_PORT:-10000}
+      SPRING_PROFILES_ACTIVE: production
       SPRING_APPLICATION_NAME: "EscolaGerenciamentoDeAulas"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://ep-cold-pine-axkrxua6.c-4.us-east-2.aws.neon.tech:5432/neondb?sslmode=require"
       SPRING_DATASOURCE_USERNAME: "neondb_owner"
