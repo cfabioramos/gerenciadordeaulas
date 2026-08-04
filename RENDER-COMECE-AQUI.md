@@ -32,21 +32,23 @@ Dashboard → New + → Web Service
 └─ Plan: Free
 ```
 
-### Passo 4: Adicionar Variáveis (13 total)
+### Passo 4: Configurar Comandos Build & Start
+
+⚠️ **AMBOS SÃO OBRIGATÓRIOS no Render:**
+
+**Build Command:**
 ```
-Advanced → Add Environment Variable
-└─ Copie os 13 valores do arquivo:
-   RENDER-PASSO-A-PASSO.md → PASSO 4
+docker build -t app .
 ```
 
-⚠️ **Build Command - IMPORTANTE**
+**Start Command:**
 ```
-Antes de fazer Deploy, certifique-se que:
-├─ Build Command: docker build -t app .
-└─ Start Command: (deixar vazio)
+sh -c "java ${JAVA_OPTS} -jar /app/gerenciadoraulas.jar"
+```
 
-Consulte: RENDER-BUILD-COMMAND.md para detalhes
-```
+Consulte para detalhes:
+- RENDER-BUILD-COMMAND.md
+- RENDER-START-COMMAND.md
 
 ### Passo 6: Deploy
 ```

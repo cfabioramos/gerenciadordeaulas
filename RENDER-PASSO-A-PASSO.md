@@ -108,7 +108,7 @@ CONFIGURAR:
 │                                                     │
 │ Environment:        Docker                          │
 │ Build Command:      docker build -t app .           │
-│ Start Command:      (deixar vazio)                  │
+│ Start Command:      sh -c "java ${JAVA_OPTS} -jar /app/gerenciadoraulas.jar"
 │                                                     │
 │ Region:             São Paulo (sa)                  │
 │ Plan:               Free                            │

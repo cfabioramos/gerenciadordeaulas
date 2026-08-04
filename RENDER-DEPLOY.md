@@ -140,7 +140,7 @@ Name: gerenciadordeaulas
 ```
 Environment: Docker
 Build Command: docker build -t app .
-Start Command: (deixar vazio - usará ENTRYPOINT do Dockerfile)
+Start Command: sh -c "java ${JAVA_OPTS} -jar /app/gerenciadoraulas.jar"
 ```
 
 **Region:**
