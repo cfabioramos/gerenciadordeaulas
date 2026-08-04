@@ -107,7 +107,7 @@ CONFIGURAR:
 │ Name:               gerenciadordeaulas              │
 │                                                     │
 │ Environment:        Docker                          │
-│ Build Command:      (deixar vazio)                  │
+│ Build Command:      docker build -t app .           │
 │ Start Command:      (deixar vazio)                  │
 │                                                     │
 │ Region:             São Paulo (sa)                  │

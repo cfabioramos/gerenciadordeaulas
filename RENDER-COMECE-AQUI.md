@@ -32,11 +32,20 @@ Dashboard → New + → Web Service
 └─ Plan: Free
 ```
 
-### Passo 5: Adicionar Variáveis (13 total)
+### Passo 4: Adicionar Variáveis (13 total)
 ```
 Advanced → Add Environment Variable
 └─ Copie os 13 valores do arquivo:
    RENDER-PASSO-A-PASSO.md → PASSO 4
+```
+
+⚠️ **Build Command - IMPORTANTE**
+```
+Antes de fazer Deploy, certifique-se que:
+├─ Build Command: docker build -t app .
+└─ Start Command: (deixar vazio)
+
+Consulte: RENDER-BUILD-COMMAND.md para detalhes
 ```
 
 ### Passo 6: Deploy

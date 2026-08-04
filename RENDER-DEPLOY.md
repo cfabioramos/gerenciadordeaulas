@@ -139,8 +139,8 @@ Name: gerenciadordeaulas
 **Build & Deploy:**
 ```
 Environment: Docker
-Build Command: (leave empty - usará Dockerfile)
-Start Command: (leave empty - usará ENTRYPOINT do Dockerfile)
+Build Command: docker build -t app .
+Start Command: (deixar vazio - usará ENTRYPOINT do Dockerfile)
 ```
 
 **Region:**
