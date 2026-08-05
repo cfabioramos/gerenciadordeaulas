@@ -1,0 +1,38 @@
+Gere todo código de um serviço web em Java Spring Boot que possibilite o gerenciamento de (i) ciclos de aulas, (ii) aulas programadas, (iii) tipos de aula, (iv) aulas, (v) alunos, (vi) matrículas e (vii) presenças em cada aula.
+
+REGRAS
+1. Cada aula deve ser programada em um ciclo
+2. Cada aula programada tem um tipo: * x 1 
+1. Cada aula pertence a uma aula programada: * x 1 
+2. Cada aluno pode estar matriculado em um ou muitas aulas programadas: * x *
+3. Cada aluno pode estar presente em uma ou muitas aulas: * x *
+
+Exemplos:
+Ciclo: 
+- Id: 1
+- Nome: 3/2026 UFBA
+- Data Início: 01/07/2026
+- Data Fim: 31/10/2026
+Tipo Aula:
+- Id: 1
+- Nome: Forro
+ProgramaAula:
+Id: 1
+Id_TipoAula: 1
+Nome: Forro 2 semestre UFBA
+Aula: 
+- Id: 1
+- Id_ProgramaAula: 1
+- Nome: UFBA Sábado 01/08
+- Data: Sábado 01/08/2026
+Aluno: 
+- Id: 1
+- Nome: Carlos Fábio
+Matrícula:
+- Id_Matricula
+- Id_Aluno: 1
+- Id_Ciclo: 1
+- Data: 20/10/2026
+Presença:
+- Id_Aula
+- Id_Matricula
