@@ -4,6 +4,7 @@ import com.br.gerenciadoraulas.dto.PresencaDTO;
 import com.br.gerenciadoraulas.model.Presenca;
 import com.br.gerenciadoraulas.repository.PresencaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +39,7 @@ public class PresencaService {
         presencaRepository.deleteById(id);
     }
 
+    @Transactional
     public void deletarPorMatriculaEAula(Long matriculaId, Long aulaId) {
         presencaRepository.deleteByMatriculaIdAndAulaId(matriculaId, aulaId);
     }
