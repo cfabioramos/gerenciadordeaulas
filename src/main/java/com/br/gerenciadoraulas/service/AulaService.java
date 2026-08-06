@@ -5,7 +5,7 @@ import com.br.gerenciadoraulas.model.Aula;
 import com.br.gerenciadoraulas.repository.AulaRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,15 +26,22 @@ public class AulaService {
                 .collect(Collectors.toList());
     }
 
-    public List<AulaDTO> findByData(LocalDate data){
+    public List<AulaDTO> findByData(LocalDateTime data){
         return aulaRepository.findByData(data)
                 .stream()
                 .map(AulaDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public List<AulaDTO> findByDataBetween(LocalDate inicio, LocalDate fim){
+    public List<AulaDTO> findByDataBetween(LocalDateTime inicio, LocalDateTime fim){
         return aulaRepository.findByDataBetween(inicio, fim)
+                .stream()
+                .map(AulaDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<AulaDTO> listarPorProgramaAula(Long programaAulaId) {
+        return aulaRepository.findByProgramaAulaId(programaAulaId)
                 .stream()
                 .map(AulaDTO::new)
                 .collect(Collectors.toList());

@@ -2,7 +2,7 @@ package com.br.gerenciadoraulas.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Aula {
@@ -10,7 +10,7 @@ public class Aula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private LocalDate data;
+    private LocalDateTime data;
 
     @ManyToOne
     @JoinColumn(name = "programaaula_id")
@@ -32,11 +32,11 @@ public class Aula {
         this.nome = nome;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 

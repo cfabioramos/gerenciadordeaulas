@@ -2,12 +2,12 @@ package com.br.gerenciadoraulas.dto;
 
 import com.br.gerenciadoraulas.model.Aula;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AulaDTO {
     private Long id;
     private String nome;
-    private LocalDate data;
+    private LocalDateTime data;
     private Long programaAulaId;
     private String programaAulaNome;
 
@@ -24,7 +24,7 @@ public class AulaDTO {
 
     public Long getId() { return id; }
     public String getNome() { return nome; }
-    public LocalDate getData() { return data; }
+    public LocalDateTime getData() { return data; }
     public Long getProgramaAulaId() { return programaAulaId; }
     public String getProgramaAulaNome() { return programaAulaNome; }
 }

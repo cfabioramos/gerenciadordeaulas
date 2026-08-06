@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -47,9 +47,15 @@ public class AulaController {
         return ResponseEntity.noContent().build();
     }
 
-    // Buscar aulas por data (usando findByData)
+    // Buscar aulas por data/hora (usando findByData)
     @GetMapping("/data/{data}")
-    public List<AulaDTO> buscarPorData(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+    public List<AulaDTO> buscarPorData(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime data) {
         return aulaService.findByData(data);
+    }
+
+    // Buscar aulas por programa de aula
+    @GetMapping("/programaAula/{programaAulaId}")
+    public List<AulaDTO> listarPorProgramaAula(@PathVariable Long programaAulaId) {
+        return aulaService.listarPorProgramaAula(programaAulaId);
     }
 }

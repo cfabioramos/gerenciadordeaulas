@@ -4,16 +4,19 @@ import com.br.gerenciadoraulas.model.Aula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface AulaRepository extends JpaRepository<Aula, Long> {
 
-    // Busca todas as aulas em uma data específica
-    List<Aula> findByData(LocalDate data);
+    // Busca todas as aulas em uma data/hora específica
+    List<Aula> findByData(LocalDateTime data);
 
-    // Se quiser buscar por intervalo de datas:
-    List<Aula> findByDataBetween(LocalDate inicio, LocalDate fim);
+    // Buscar por intervalo de data/hora:
+    List<Aula> findByDataBetween(LocalDateTime inicio, LocalDateTime fim);
+
+    // Buscar todas as aulas de um ProgramaAula
+    List<Aula> findByProgramaAulaId(Long programaAulaId);
 
 }
