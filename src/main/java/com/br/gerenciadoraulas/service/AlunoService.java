@@ -29,4 +29,9 @@ public class AlunoService {
                 .map(AlunoDTO::new)
                 .collect(Collectors.toList());
     }
+
+    // Retorna alunos (DTO) e flag de presença para uma aula específica
+    public List<AlunoDTO> consultarAlunosPorAula(Long aulaId) {
+        return alunoRepository.consultarAlunosPorAula(aulaId);
+    }
 }

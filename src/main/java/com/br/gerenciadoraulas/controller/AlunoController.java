@@ -30,4 +30,10 @@ public class AlunoController {
     public List<AlunoDTO> listarNaoMatriculados(@PathVariable Long cicloId) {
         return alunoService.listarNaoMatriculados(cicloId);
     }
+
+    // Listar alunos matriculados em uma aula com flag de presença
+    @GetMapping("/aula/{aulaId}")
+    public List<AlunoDTO> consultarAlunosPorAula(@PathVariable Long aulaId) {
+        return alunoService.consultarAlunosPorAula(aulaId);
+    }
 }

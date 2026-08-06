@@ -56,4 +56,5 @@ public class ProgramaAulaService {
                 .map(ProgramaAulaDTO::new)
                 .collect(Collectors.toList());
     }
+
 }
