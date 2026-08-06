@@ -4,6 +4,7 @@ import com.br.gerenciadoraulas.dto.CicloDTO;
 import com.br.gerenciadoraulas.model.Ciclo;
 import com.br.gerenciadoraulas.repository.CicloRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class CicloService {
     }
 
     public List<CicloDTO> listarTodas() {
-        return cicloRepository.findAll()
+            return cicloRepository.findAll(Sort.by(Sort.Direction.ASC, "dataInicio"))
                 .stream()
                 .map(CicloDTO::new)
                 .collect(Collectors.toList());
