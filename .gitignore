@@ -35,3 +35,4 @@ docker-secrets/
 .vscode/
 *.iml
 .DS_Store
+/target/classes/application.properties
