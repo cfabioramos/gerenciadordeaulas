@@ -12,7 +12,7 @@ collection:
     meta:
       id: req_ca53fefe7f484c7c80c9bd4c16135515
       created: 1785797724032
-      modified: 1785875734159
+      modified: 1786390113947
       isPrivate: false
       description: ""
       sortKey: -1785797724032
@@ -167,6 +167,34 @@ collection:
       description: ""
       sortKey: -1785280897371.8438
     method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/matriculas/aluno/1
+    name: Salvar Aluno Prod
+    meta:
+      id: req_6869d120080f477d8aa54560d6dbb3a1
+      created: 1786389909601
+      modified: 1786393072896
+      isPrivate: false
+      description: ""
+      sortKey: -1785272628145.2812
+    method: GET
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"alunoId":6,
+        	"programaAulaId": 2
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
     settings:
       renderRequestBody: true
       encodeUrl: true

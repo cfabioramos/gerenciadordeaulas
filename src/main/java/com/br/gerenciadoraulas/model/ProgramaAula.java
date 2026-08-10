@@ -19,6 +19,13 @@ public class ProgramaAula {
     @JoinColumn(name = "tipoaula_id")
     private TipoAula tipoAula;
 
+    public ProgramaAula() {
+    }
+
+    public ProgramaAula(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

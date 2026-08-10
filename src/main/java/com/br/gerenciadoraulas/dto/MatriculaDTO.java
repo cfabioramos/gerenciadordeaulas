@@ -1,6 +1,8 @@
 package com.br.gerenciadoraulas.dto;
 
+import com.br.gerenciadoraulas.model.Aluno;
 import com.br.gerenciadoraulas.model.Matricula;
+import com.br.gerenciadoraulas.model.ProgramaAula;
 
 import java.time.LocalDate;
 
@@ -11,6 +13,8 @@ public class MatriculaDTO {
     private String alunoNome;
     private Long programaAulaId;
     private String programaAulaNome;
+
+    public MatriculaDTO(){}
 
     public MatriculaDTO(Matricula matricula) {
         if (matricula == null) return;
@@ -24,6 +28,14 @@ public class MatriculaDTO {
             this.programaAulaId = matricula.getProgramaAula().getId();
             this.programaAulaNome = matricula.getProgramaAula().getNome();
         }
+    }
+
+    public Matricula generateMatricula() {
+        Matricula matricula = new Matricula();
+        matricula.setAluno(new Aluno(this.alunoId));
+        matricula.setProgramaAula(new ProgramaAula(this.programaAulaId));
+        matricula.setData(LocalDate.now());
+        return matricula;
     }
 
     public Long getId() {

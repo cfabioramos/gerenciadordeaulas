@@ -1,6 +1,7 @@
 package com.br.gerenciadoraulas.service;
 
 import com.br.gerenciadoraulas.dto.AlunoDTO;
+import com.br.gerenciadoraulas.model.Aluno;
 import com.br.gerenciadoraulas.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +35,12 @@ public class AlunoService {
     public List<AlunoDTO> consultarAlunosPorAula(Long aulaId) {
         return alunoRepository.consultarAlunosPorAula(aulaId);
     }
+
+    public AlunoDTO salvar(Aluno aluno) {
+        Aluno saved = this.alunoRepository.save(aluno);
+        return new AlunoDTO(saved);
+    }
+
+
+
 }

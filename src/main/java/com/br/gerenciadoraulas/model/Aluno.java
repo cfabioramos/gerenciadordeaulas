@@ -12,6 +12,13 @@ public class Aluno {
     private Long id;
     private String nome;
 
+    public Aluno() {
+    }
+
+    public Aluno(Long id) {
+        this.setId(id);
+    }
+
     public Long getId() {
         return id;
     }

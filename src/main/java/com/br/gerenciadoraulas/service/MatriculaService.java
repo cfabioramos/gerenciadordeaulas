@@ -1,5 +1,6 @@
 package com.br.gerenciadoraulas.service;
 
+import com.br.gerenciadoraulas.dto.MatriculaDTO;
 import com.br.gerenciadoraulas.model.Matricula;
 import com.br.gerenciadoraulas.repository.MatriculaRepository;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,9 @@ public class MatriculaService {
         return matriculaRepository.findById(id);
     }
 
-    public Matricula salvar(Matricula matricula) {
-        return matriculaRepository.save(matricula);
+    public MatriculaDTO salvar(Matricula matricula) {
+        Matricula saved = matriculaRepository.save(matricula);
+        return new MatriculaDTO(saved);
     }
 
     public void deletar(Long id) {
@@ -35,4 +37,9 @@ public class MatriculaService {
     public List<Matricula> listarPorProgramaAula(Long programaAulaId) {
         return matriculaRepository.findByProgramaAulaId(programaAulaId);
     }
+
+    public List<MatriculaDTO> listarPorAluno(Long alunoId) {
+        return matriculaRepository.findByAlunoId(alunoId).stream().map(MatriculaDTO::new).toList();
+    }
+
 }
