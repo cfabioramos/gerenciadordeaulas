@@ -12,7 +12,7 @@ collection:
     meta:
       id: req_ca53fefe7f484c7c80c9bd4c16135515
       created: 1785797724032
-      modified: 1785848689668
+      modified: 1785875734159
       isPrivate: false
       description: ""
       sortKey: -1785797724032
@@ -30,10 +30,142 @@ collection:
     meta:
       id: req_80b7555529834b118f1465c94d973ca5
       created: 1785803403090
-      modified: 1785803447973
+      modified: 1785951215646
       isPrivate: false
       description: ""
       sortKey: -1785803403090
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://gerenciadordeaulas-1.onrender.com/alunos/nao-matriculados/1
+    name: Alunos Matriculados Prod
+    meta:
+      id: req_e8aadf1fd6b44484a7132d3e92123b4a
+      created: 1785850716393
+      modified: 1785951225824
+      isPrivate: false
+      description: ""
+      sortKey: -1785533108782
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://gerenciadordeaulas-1.onrender.com/ciclos
+    name: Ciclos Prod
+    meta:
+      id: req_9c77801bdf974d83a57d4d663def12a2
+      created: 1785951252708
+      modified: 1786021778372
+      isPrivate: false
+      description: ""
+      sortKey: -1785400801157
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://gerenciadordeaulas-1.onrender.com/programa-aulas/ciclo/2
+    name: Programas de Aulas Prod
+    meta:
+      id: req_8c59d8aa15b147f5a709801b45ca8ae0
+      created: 1786030725234
+      modified: 1786033672106
+      isPrivate: false
+      description: ""
+      sortKey: -1785334647344.5
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://gerenciadordeaulas-1.onrender.com/aulas/programaAula/1
+    name: Aulas do Programas Prod
+    meta:
+      id: req_b96e56315b3c4404bed90e461d01f9ff
+      created: 1786033683624
+      modified: 1786034579892
+      isPrivate: false
+      description: ""
+      sortKey: -1785301570438.25
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://gerenciadordeaulas-1.onrender.com/presencas/matricula/4/aula/1
+    name: Remover Presenca Prod
+    meta:
+      id: req_7a6179be3bdc4131bfe5244121e3acb1
+      created: 1786037931011
+      modified: 1786038699352
+      isPrivate: false
+      description: ""
+      sortKey: -1785285031985.125
+    method: DELETE
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://gerenciadordeaulas-1.onrender.com/presencas
+    name: Adicionar Presenca Prod
+    meta:
+      id: req_f32d9b2f0b994eeb988f555960845f9f
+      created: 1786039703833
+      modified: 1786041418596
+      isPrivate: false
+      description: ""
+      sortKey: -1785276762758.5625
+    method: POST
+    body:
+      mimeType: application/json
+      text: '{"aula":{"id":3},"matricula":{"id":3}}'
+    headers:
+      - name: Content-Type
+        value: application/json
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: https://gerenciadordeaulas-1.onrender.com/alunos/aula/1
+    name: Consultar Alunos por Aula Prod
+    meta:
+      id: req_c164e14714aa442aaf9e867c3622c3d0
+      created: 1786040307525
+      modified: 1786123081677
+      isPrivate: false
+      description: ""
+      sortKey: -1785280897371.8438
     method: GET
     settings:
       renderRequestBody: true
