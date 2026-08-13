@@ -62,6 +62,13 @@
 			<version>42.7.13</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!-- OpenAPI 3 / Swagger UI para Spring Boot 3 -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
