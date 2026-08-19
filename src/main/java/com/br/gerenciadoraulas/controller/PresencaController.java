@@ -1,7 +1,6 @@
 package com.br.gerenciadoraulas.controller;
 
 import com.br.gerenciadoraulas.dto.PresencaDTO;
-import com.br.gerenciadoraulas.model.Presenca;
 import com.br.gerenciadoraulas.service.PresencaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +31,9 @@ public class PresencaController {
     }
 
     @PostMapping
-    public ResponseEntity<PresencaDTO> criar(@RequestBody Presenca presenca) {
-        PresencaDTO dto = presencaService.salvar(presenca);
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    public ResponseEntity<PresencaDTO> criar(@RequestBody PresencaDTO dto) {
+        PresencaDTO savedDto = presencaService.salvar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDto);
     }
 
     @DeleteMapping("/{id}")

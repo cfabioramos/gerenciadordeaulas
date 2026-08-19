@@ -157,8 +157,8 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: https://gerenciadordeaulas-1.onrender.com/alunos/aula/1
-    name: Consultar Alunos por Aula Prod
+  - url: https://gerenciadordeaulas-1.onrender.com/matriculas/aula/1
+    name: Consultar Matrículas por Aula Prod
     meta:
       id: req_c164e14714aa442aaf9e867c3622c3d0
       created: 1786040307525
