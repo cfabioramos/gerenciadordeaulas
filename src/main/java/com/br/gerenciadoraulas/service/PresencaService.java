@@ -30,9 +30,14 @@ public class PresencaService {
         return presencaRepository.findById(id).map(PresencaDTO::new);
     }
 
-    public PresencaDTO salvar(Presenca presenca) {
+    private PresencaDTO salvar(Presenca presenca) {
         Presenca saved = presencaRepository.save(presenca);
         return new PresencaDTO(saved);
+    }
+
+    public PresencaDTO salvar(PresencaDTO presencaDTO) {
+        Presenca presenca = presencaDTO.generatePresenca();
+        return salvar(presenca);
     }
 
     public void deletar(Long id) {

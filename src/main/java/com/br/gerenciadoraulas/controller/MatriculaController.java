@@ -49,4 +49,10 @@ public class MatriculaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    // Listar matrículas de uma aula com flag de presença
+    @GetMapping("/aula/{aulaId}")
+    public List<MatriculaDTO> consultarMatriculasPorAula(@PathVariable Long aulaId) {
+        return matriculaService.consultarMatriculasPorAula(aulaId);
+    }
+
 }

@@ -31,12 +31,6 @@ public class AlunoController {
         return alunoService.listarNaoMatriculados(cicloId);
     }
 
-    // Listar alunos matriculados em uma aula com flag de presença
-    @GetMapping("/aula/{aulaId}")
-    public List<AlunoDTO> consultarAlunosPorAula(@PathVariable Long aulaId) {
-        return alunoService.consultarAlunosPorAula(aulaId);
-    }
-
     @PostMapping
     public ResponseEntity<AlunoDTO> criar(@RequestBody Aluno aluno) {
         AlunoDTO dto = alunoService.salvar(aluno);

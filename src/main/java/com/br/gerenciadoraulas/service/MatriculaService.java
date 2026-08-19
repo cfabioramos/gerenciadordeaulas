@@ -42,4 +42,8 @@ public class MatriculaService {
         return matriculaRepository.findByAlunoId(alunoId).stream().map(MatriculaDTO::new).toList();
     }
 
+    public List<MatriculaDTO> consultarMatriculasPorAula(Long aulaId) {
+        return matriculaRepository.consultarMatriculasPorAula(aulaId);
+    }
+
 }

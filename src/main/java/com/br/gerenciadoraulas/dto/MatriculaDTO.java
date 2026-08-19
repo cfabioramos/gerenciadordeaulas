@@ -13,8 +13,25 @@ public class MatriculaDTO {
     private String alunoNome;
     private Long programaAulaId;
     private String programaAulaNome;
+    private Boolean presente;
+    private Long presencaId;
 
     public MatriculaDTO(){}
+
+    public MatriculaDTO(Long id, LocalDate data, Long alunoId, String alunoNome, Long programaAulaId, String programaAulaNome, Boolean presente) {
+        this(id, data, alunoId, alunoNome, programaAulaId, programaAulaNome, presente, null);
+    }
+
+    public MatriculaDTO(Long id, LocalDate data, Long alunoId, String alunoNome, Long programaAulaId, String programaAulaNome, Boolean presente, Long presencaId) {
+        this.id = id;
+        this.data = data;
+        this.alunoId = alunoId;
+        this.alunoNome = alunoNome;
+        this.programaAulaId = programaAulaId;
+        this.programaAulaNome = programaAulaNome;
+        this.presente = presente;
+        this.presencaId = presencaId;
+    }
 
     public MatriculaDTO(Matricula matricula) {
         if (matricula == null) return;
@@ -60,5 +77,21 @@ public class MatriculaDTO {
 
     public String getProgramaAulaNome() {
         return programaAulaNome;
+    }
+
+    public Boolean getPresente() {
+        return presente;
+    }
+
+    public void setPresente(Boolean presente) {
+        this.presente = presente;
+    }
+
+    public Long getPresencaId() {
+        return presencaId;
+    }
+
+    public void setPresencaId(Long presencaId) {
+        this.presencaId = presencaId;
     }
 }
