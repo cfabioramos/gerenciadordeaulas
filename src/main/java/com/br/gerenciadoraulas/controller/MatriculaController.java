@@ -50,6 +50,12 @@ public class MatriculaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        this.matriculaService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
     // Listar matrículas de uma aula com flag de presença
     @GetMapping("/aula/{aulaId}")
     public List<MatriculaDTO> consultarMatriculasPorAula(@PathVariable Long aulaId) {
