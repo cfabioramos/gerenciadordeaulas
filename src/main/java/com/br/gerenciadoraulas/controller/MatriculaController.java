@@ -1,5 +1,6 @@
 package com.br.gerenciadoraulas.controller;
 
+import com.br.gerenciadoraulas.dto.CadastroMatriculaDTO;
 import com.br.gerenciadoraulas.dto.MatriculaDTO;
 import com.br.gerenciadoraulas.service.MatriculaService;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class MatriculaController {
     }
 
     @PostMapping
-    public ResponseEntity<MatriculaDTO> criar(@RequestBody MatriculaDTO dto) {
+    public ResponseEntity<MatriculaDTO> criar(@RequestBody CadastroMatriculaDTO dto) {
         MatriculaDTO saved = this.matriculaService.salvar(dto.generateMatricula());
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
