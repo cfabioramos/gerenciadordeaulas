@@ -15,18 +15,20 @@ public class MatriculaDTO {
     private String programaAulaNome;
     private Boolean presente;
     private Long presencaId;
+    private Boolean flAtivo;
 
     public MatriculaDTO(){}
 
-    public MatriculaDTO(Long id, LocalDate data, Long alunoId, String alunoNome, Long programaAulaId, String programaAulaNome, Boolean presente) {
-        this(id, data, alunoId, alunoNome, programaAulaId, programaAulaNome, presente, null);
+    public MatriculaDTO(Long id, LocalDate data, Boolean flAtivo, Long alunoId, String alunoNome, Long programaAulaId, String programaAulaNome, Boolean presente) {
+        this(id, data, flAtivo, alunoId, alunoNome, programaAulaId, programaAulaNome, presente, null);
     }
 
-    public MatriculaDTO(Long id, LocalDate data, Long alunoId, String alunoNome, Long programaAulaId, String programaAulaNome, Boolean presente, Long presencaId) {
+    public MatriculaDTO(Long id, LocalDate data, Boolean flAtivo, Long alunoId, String alunoNome, Long programaAulaId, String programaAulaNome, Boolean presente, Long presencaId) {
         this.id = id;
         this.data = data;
         this.alunoId = alunoId;
         this.alunoNome = alunoNome;
+        this.flAtivo = flAtivo;
         this.programaAulaId = programaAulaId;
         this.programaAulaNome = programaAulaNome;
         this.presente = presente;
@@ -37,6 +39,7 @@ public class MatriculaDTO {
         if (matricula == null) return;
         this.id = matricula.getId();
         this.data = matricula.getData();
+        this.flAtivo = matricula.getFlAtivo();
         if (matricula.getAluno() != null) {
             this.alunoId = matricula.getAluno().getId();
             this.alunoNome = matricula.getAluno().getNome();
@@ -93,5 +96,13 @@ public class MatriculaDTO {
 
     public void setPresencaId(Long presencaId) {
         this.presencaId = presencaId;
+    }
+
+    public Boolean getFlAtivo() {
+        return flAtivo;
+    }
+
+    public void setFlAtivo(Boolean flAtivo) {
+        this.flAtivo = flAtivo;
     }
 }

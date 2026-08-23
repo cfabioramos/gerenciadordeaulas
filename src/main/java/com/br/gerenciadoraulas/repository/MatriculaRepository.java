@@ -21,6 +21,7 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
             SELECT new com.br.gerenciadoraulas.dto.MatriculaDTO(
                 m.id,
                 m.data,
+                m.flAtivo,
                 m.aluno.id,
                 m.aluno.nome,
                 m.programaAula.id,
