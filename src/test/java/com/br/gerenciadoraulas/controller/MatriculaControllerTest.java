@@ -30,6 +30,7 @@ class MatriculaControllerTest {
         MatriculaDTO dto = new MatriculaDTO(
                 10L,
                 LocalDate.now(),
+                true,
                 5L,
                 "João Silva",
                 2L,
@@ -44,7 +45,7 @@ class MatriculaControllerTest {
 
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
-        assertEquals(true, resultado.get(0).getPresente());
-        assertEquals(100L, resultado.get(0).getPresencaId());
+        assertEquals(true, resultado.getFirst().getPresente());
+        assertEquals(100L, resultado.getFirst().getPresencaId());
     }
 }

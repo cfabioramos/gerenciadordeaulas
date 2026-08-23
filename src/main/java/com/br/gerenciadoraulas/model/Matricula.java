@@ -10,6 +10,8 @@ public class Matricula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate data;
+    @Column(name = "fl_ativo")
+    private Boolean flAtivo;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "aluno_id")
@@ -49,5 +51,13 @@ public class Matricula {
 
     public void setProgramaAula(ProgramaAula programaAula) {
         this.programaAula = programaAula;
+    }
+
+    public Boolean getFlAtivo() {
+        return flAtivo;
+    }
+
+    public void setFlAtivo(Boolean flAtivo) {
+        this.flAtivo = flAtivo;
     }
 }
