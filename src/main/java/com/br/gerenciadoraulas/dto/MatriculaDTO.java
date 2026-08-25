@@ -20,6 +20,8 @@ public class MatriculaDTO {
     private BigDecimal valor;
     private BigDecimal valorMensalidade;
     private Integer diaVencimento;
+    private LocalDate cicloDataInicio;
+    private LocalDate cicloDataFim;
 
     public MatriculaDTO(){}
 
@@ -51,6 +53,10 @@ public class MatriculaDTO {
         if (matricula.getProgramaAula() != null) {
             this.programaAulaId = matricula.getProgramaAula().getId();
             this.programaAulaNome = matricula.getProgramaAula().getNome();
+            if (matricula.getProgramaAula().getCiclo() != null) {
+                this.cicloDataInicio = matricula.getProgramaAula().getCiclo().getDataInicio();
+                this.cicloDataFim = matricula.getProgramaAula().getCiclo().getDataFim();
+            }
         }
         this.valor = matricula.getValor();
         this.valorMensalidade = matricula.getValorMensalidade();
@@ -139,5 +145,21 @@ public class MatriculaDTO {
 
     public void setDiaVencimento(Integer diaVencimento) {
         this.diaVencimento = diaVencimento;
+    }
+
+    public LocalDate getCicloDataInicio() {
+        return cicloDataInicio;
+    }
+
+    public void setCicloDataInicio(LocalDate cicloDataInicio) {
+        this.cicloDataInicio = cicloDataInicio;
+    }
+
+    public LocalDate getCicloDataFim() {
+        return cicloDataFim;
+    }
+
+    public void setCicloDataFim(LocalDate cicloDataFim) {
+        this.cicloDataFim = cicloDataFim;
     }
 }
