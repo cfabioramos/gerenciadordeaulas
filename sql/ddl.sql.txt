@@ -55,7 +55,7 @@ CREATE TABLE presenca (
     aula_id INT NOT NULL,
     matricula_id INT NOT NULL,
     CONSTRAINT fk_presenca_aula FOREIGN KEY (aula_id) REFERENCES aula (id) ON DELETE CASCADE,
-    CONSTRAINT fk_presenca_matricula FOREIGN KEY (matricula_id) REFERENCES matricula (id) ON DELETE CASCADE,
+    CONSTRAINT fk_presenca_matricula FOREIGN KEY (matricula_id) REFERENCES matricula (id),
     CONSTRAINT uq_presenca UNIQUE (aula_id, matricula_id) -- evita duplicidade
 );
 
