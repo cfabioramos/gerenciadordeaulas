@@ -2,6 +2,7 @@ package com.br.gerenciadoraulas.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -21,10 +22,10 @@ public class Matricula {
     @JoinColumn(name = "programaaula_id")
     private ProgramaAula programaAula;
 
-    private Double valor;
+    private BigDecimal valor;
 
     @Column(name = "valor_mensalidade")
-    private Double valorMensalidade;
+    private BigDecimal valorMensalidade;
 
     @Column(name = "dia_vencimento")
     private Integer diaVencimento;
@@ -69,19 +70,19 @@ public class Matricula {
         this.flAtivo = flAtivo;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public Double getValorMensalidade() {
+    public BigDecimal getValorMensalidade() {
         return valorMensalidade;
     }
 
-    public void setValorMensalidade(Double valorMensalidade) {
+    public void setValorMensalidade(BigDecimal valorMensalidade) {
         this.valorMensalidade = valorMensalidade;
     }
 

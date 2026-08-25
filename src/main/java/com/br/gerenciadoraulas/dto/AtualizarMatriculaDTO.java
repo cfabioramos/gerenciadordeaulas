@@ -1,32 +1,34 @@
 package com.br.gerenciadoraulas.dto;
 
+import java.math.BigDecimal;
+
 public class AtualizarMatriculaDTO {
-    private Double valor;
-    private Double valorMensalidade;
+    private BigDecimal valor;
+    private BigDecimal valorMensalidade;
     private Integer diaVencimento;
 
     public AtualizarMatriculaDTO() {
     }
 
-    public AtualizarMatriculaDTO(Double valor, Double valorMensalidade, Integer diaVencimento) {
+    public AtualizarMatriculaDTO(BigDecimal valor, BigDecimal valorMensalidade, Integer diaVencimento) {
         this.valor = valor;
         this.valorMensalidade = valorMensalidade;
         this.diaVencimento = diaVencimento;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public Double getValorMensalidade() {
+    public BigDecimal getValorMensalidade() {
         return valorMensalidade;
     }
 
-    public void setValorMensalidade(Double valorMensalidade) {
+    public void setValorMensalidade(BigDecimal valorMensalidade) {
         this.valorMensalidade = valorMensalidade;
     }
 

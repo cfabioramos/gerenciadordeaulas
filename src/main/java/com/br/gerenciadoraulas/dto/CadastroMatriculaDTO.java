@@ -5,13 +5,14 @@ import com.br.gerenciadoraulas.model.Matricula;
 import com.br.gerenciadoraulas.model.ProgramaAula;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class CadastroMatriculaDTO {
     private Long alunoId;
     private Long programaAulaId;
-    private Double valor;
-    private Double valorMensalidade;
+    private BigDecimal valor;
+    private BigDecimal valorMensalidade;
     private Integer diaVencimento;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -61,19 +62,19 @@ public class CadastroMatriculaDTO {
         this.data = data;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
-    public Double getValorMensalidade() {
+    public BigDecimal getValorMensalidade() {
         return valorMensalidade;
     }
 
-    public void setValorMensalidade(Double valorMensalidade) {
+    public void setValorMensalidade(BigDecimal valorMensalidade) {
         this.valorMensalidade = valorMensalidade;
     }
 
