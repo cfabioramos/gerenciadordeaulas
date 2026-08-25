@@ -82,3 +82,24 @@ VALUES (1, 1, CURRENT_DATE);
 -- Presença
 INSERT INTO presenca (aula_id, matricula_id)
 VALUES (1, 1);
+
+-- ============================
+-- TABELA: Pagamento
+-- ============================
+CREATE TABLE pagamento (
+    id SERIAL PRIMARY KEY,
+    valor DECIMAL(10, 2) NOT NULL,
+    data DATE NOT NULL
+);
+
+-- ============================
+-- TABELA: Pagamento_Matrícula
+-- ============================
+CREATE TABLE pagamento_matricula (
+    id SERIAL PRIMARY KEY,
+    valor_mensalidade_dia DECIMAL(10, 2) NOT NULL,
+    matricula_id INT NOT NULL,
+    pagamento_id INT NOT NULL,
+    CONSTRAINT fk_pagamento_matricula_matricula FOREIGN KEY (matricula_id) REFERENCES matricula (id) ON DELETE CASCADE,
+    CONSTRAINT fk_pagamento_matricula_pagamento FOREIGN KEY (pagamento_id) REFERENCES pagamento (id) ON DELETE CASCADE
+);
