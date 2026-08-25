@@ -1,5 +1,6 @@
 package com.br.gerenciadoraulas.controller;
 
+import com.br.gerenciadoraulas.dto.AtualizarMatriculaDTO;
 import com.br.gerenciadoraulas.dto.CadastroMatriculaDTO;
 import com.br.gerenciadoraulas.dto.MatriculaDTO;
 import com.br.gerenciadoraulas.service.MatriculaService;
@@ -54,6 +55,23 @@ public class MatriculaController {
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         this.matriculaService.deletar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MatriculaDTO> atualizar(@PathVariable Long id, @RequestBody AtualizarMatriculaDTO dto) {
+        return this.matriculaService.buscarPorId(id).map(matricula -> {
+            matricula.setValor(dto.getValor());
+            matricula.setValorMensalidade(dto.getValorMensalidade());
+            matricula.setDiaVencimento(dto.getDiaVencimento());
+            MatriculaDTO updated = this.matriculaService.salvar(matricula);
+            return ResponseEntity.ok(updated);
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Void> atualizarStatus(@PathVariable Long id, @RequestParam Boolean ativo) {
+        this.matriculaService.atualizarStatus(id, ativo);
+        return ResponseEntity.ok().build();
     }
 
     // Listar matrículas de uma aula com flag de presença

@@ -21,6 +21,14 @@ public class Matricula {
     @JoinColumn(name = "programaaula_id")
     private ProgramaAula programaAula;
 
+    private Double valor;
+
+    @Column(name = "valor_mensalidade")
+    private Double valorMensalidade;
+
+    @Column(name = "dia_vencimento")
+    private Integer diaVencimento;
+
     public Long getId() {
         return id;
     }
@@ -59,5 +67,29 @@ public class Matricula {
 
     public void setFlAtivo(Boolean flAtivo) {
         this.flAtivo = flAtivo;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Double getValorMensalidade() {
+        return valorMensalidade;
+    }
+
+    public void setValorMensalidade(Double valorMensalidade) {
+        this.valorMensalidade = valorMensalidade;
+    }
+
+    public Integer getDiaVencimento() {
+        return diaVencimento;
+    }
+
+    public void setDiaVencimento(Integer diaVencimento) {
+        this.diaVencimento = diaVencimento;
     }
 }
