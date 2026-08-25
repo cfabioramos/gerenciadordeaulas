@@ -87,7 +87,7 @@ VALUES (1, 1);
 -- TABELA: Pagamento
 -- ============================
 CREATE TABLE pagamento (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     valor DECIMAL(10, 2) NOT NULL,
     data DATE NOT NULL
 );
@@ -96,10 +96,10 @@ CREATE TABLE pagamento (
 -- TABELA: Pagamento_Matrícula
 -- ============================
 CREATE TABLE pagamento_matricula (
-    id SERIAL PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     valor_mensalidade_dia DECIMAL(10, 2) NOT NULL,
-    matricula_id INT NOT NULL,
-    pagamento_id INT NOT NULL,
+    matricula_id BIGINT NOT NULL,
+    pagamento_id BIGINT NOT NULL,
     CONSTRAINT fk_pagamento_matricula_matricula FOREIGN KEY (matricula_id) REFERENCES matricula (id) ON DELETE CASCADE,
     CONSTRAINT fk_pagamento_matricula_pagamento FOREIGN KEY (pagamento_id) REFERENCES pagamento (id) ON DELETE CASCADE
 );
