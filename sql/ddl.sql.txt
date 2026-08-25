@@ -37,6 +37,10 @@ CREATE TABLE matricula (
     aluno_id INT NOT NULL,
     ciclo_id INT NOT NULL,
     data DATE NOT NULL DEFAULT CURRENT_DATE,
+    fl_ativo BOOLEAN,
+    valor DECIMAL(10, 2),
+    valor_mensalidade DECIMAL(10, 2),
+    dia_vencimento INT,
     CONSTRAINT fk_matricula_aluno FOREIGN KEY (aluno_id) REFERENCES aluno (id) ON DELETE CASCADE,
     CONSTRAINT fk_matricula_ciclo FOREIGN KEY (ciclo_id) REFERENCES ciclo (id) ON DELETE CASCADE,
     CONSTRAINT uq_matricula UNIQUE (aluno_id, ciclo_id) -- evita duplicidade

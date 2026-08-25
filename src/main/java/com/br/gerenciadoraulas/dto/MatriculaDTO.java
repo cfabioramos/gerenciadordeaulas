@@ -16,6 +16,9 @@ public class MatriculaDTO {
     private Boolean presente;
     private Long presencaId;
     private Boolean flAtivo;
+    private Double valor;
+    private Double valorMensalidade;
+    private Integer diaVencimento;
 
     public MatriculaDTO(){}
 
@@ -48,6 +51,9 @@ public class MatriculaDTO {
             this.programaAulaId = matricula.getProgramaAula().getId();
             this.programaAulaNome = matricula.getProgramaAula().getNome();
         }
+        this.valor = matricula.getValor();
+        this.valorMensalidade = matricula.getValorMensalidade();
+        this.diaVencimento = matricula.getDiaVencimento();
     }
 
     public Matricula generateMatricula() {
@@ -55,6 +61,10 @@ public class MatriculaDTO {
         matricula.setAluno(new Aluno(this.alunoId));
         matricula.setProgramaAula(new ProgramaAula(this.programaAulaId));
         matricula.setData(LocalDate.now());
+        matricula.setFlAtivo(this.flAtivo);
+        matricula.setValor(this.valor);
+        matricula.setValorMensalidade(this.valorMensalidade);
+        matricula.setDiaVencimento(this.diaVencimento);
         return matricula;
     }
 
@@ -104,5 +114,29 @@ public class MatriculaDTO {
 
     public void setFlAtivo(Boolean flAtivo) {
         this.flAtivo = flAtivo;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Double getValorMensalidade() {
+        return valorMensalidade;
+    }
+
+    public void setValorMensalidade(Double valorMensalidade) {
+        this.valorMensalidade = valorMensalidade;
+    }
+
+    public Integer getDiaVencimento() {
+        return diaVencimento;
+    }
+
+    public void setDiaVencimento(Integer diaVencimento) {
+        this.diaVencimento = diaVencimento;
     }
 }

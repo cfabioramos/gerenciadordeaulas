@@ -34,6 +34,13 @@ public class MatriculaService {
         matriculaRepository.deleteById(id);
     }
 
+    public void atualizarStatus(Long id, Boolean ativo) {
+        matriculaRepository.findById(id).ifPresent(matricula -> {
+            matricula.setFlAtivo(ativo);
+            matriculaRepository.save(matricula);
+        });
+    }
+
     public List<Matricula> listarPorProgramaAula(Long programaAulaId) {
         return matriculaRepository.findByProgramaAulaId(programaAulaId);
     }
