@@ -47,6 +47,14 @@ public class AulaController {
         return ResponseEntity.noContent().build();
     }
 
+    // Atualizar aula por ID
+    @PutMapping("/{id}")
+    public ResponseEntity<AulaDTO> atualizar(@PathVariable Long id, @RequestBody Aula aula) {
+        return aulaService.atualizar(id, aula)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     // Buscar aulas por data/hora (usando findByData)
     @GetMapping("/data/{data}")
     public List<AulaDTO> buscarPorData(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime data) {
