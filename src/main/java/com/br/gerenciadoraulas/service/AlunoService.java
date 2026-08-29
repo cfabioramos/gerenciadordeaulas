@@ -36,6 +36,9 @@ public class AlunoService {
         return new AlunoDTO(saved);
     }
 
-
-
+    public AlunoDTO buscarPorId(Long id) {
+        return alunoRepository.findById(id)
+                .map(AlunoDTO::new)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+    }
 }

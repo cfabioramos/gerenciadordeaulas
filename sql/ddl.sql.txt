@@ -103,3 +103,20 @@ CREATE TABLE pagamento_matricula (
     CONSTRAINT fk_pagamento_matricula_matricula FOREIGN KEY (matricula_id) REFERENCES matricula (id) ON DELETE CASCADE,
     CONSTRAINT fk_pagamento_matricula_pagamento FOREIGN KEY (pagamento_id) REFERENCES pagamento (id) ON DELETE CASCADE
 );
+
+-- ============================
+-- TABELA: Usuario
+-- ============================
+CREATE TABLE usuario (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    admin BOOLEAN NOT NULL
+);
+
+-- EXEMPLOS DE INSERÇÃO PARA USUÁRIOS (com senhas criptografadas ou placeholders para DDL)
+-- Marcos Affonso (marcosaffonsodanca123)
+-- Carlos Fábio Ramos (caramilt05)
+-- Carlos Fábio Ramos Remote (caramilt05)
+

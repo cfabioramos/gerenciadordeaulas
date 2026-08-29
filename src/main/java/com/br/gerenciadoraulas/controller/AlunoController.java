@@ -37,5 +37,15 @@ public class AlunoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(dto);
     }
 
+    @GetMapping("/{id}")
+    public AlunoDTO buscarPorId(@PathVariable Long id) {
+        return alunoService.buscarPorId(id);
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AlunoDTO> atualizar(@PathVariable Long id, @RequestBody Aluno aluno) {
+        aluno.setId(id);
+        AlunoDTO dto = alunoService.salvar(aluno);
+        return ResponseEntity.ok(dto);
+    }
 }

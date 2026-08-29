@@ -59,4 +59,16 @@ public class AulaService {
     public void deletar(Long id) {
         aulaRepository.deleteById(id);
     }
+
+    public Optional<AulaDTO> atualizar(Long id, Aula updated) {
+        return aulaRepository.findById(id).map(existing -> {
+            existing.setNome(updated.getNome());
+            existing.setData(updated.getData());
+            if (updated.getProgramaAula() != null) {
+                existing.setProgramaAula(updated.getProgramaAula());
+            }
+            Aula saved = aulaRepository.save(existing);
+            return new AulaDTO(saved);
+        });
+    }
 }
