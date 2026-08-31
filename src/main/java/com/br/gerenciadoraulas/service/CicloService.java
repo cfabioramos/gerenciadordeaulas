@@ -3,6 +3,7 @@ package com.br.gerenciadoraulas.service;
 import com.br.gerenciadoraulas.dto.CicloDTO;
 import com.br.gerenciadoraulas.model.Ciclo;
 import com.br.gerenciadoraulas.repository.CicloRepository;
+import com.br.gerenciadoraulas.repository.ProgramaAulaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
 
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class CicloService {
 
     private final CicloRepository cicloRepository;
+    private final ProgramaAulaRepository programaAulaRepository;
 
-    public CicloService(CicloRepository cicloRepository) {
+    public CicloService(CicloRepository cicloRepository, ProgramaAulaRepository programaAulaRepository) {
         this.cicloRepository = cicloRepository;
+        this.programaAulaRepository = programaAulaRepository;
     }
 
     public List<CicloDTO> listarTodas() {
@@ -47,6 +50,9 @@ public class CicloService {
     }
 
     public void deletar(Long id) {
+        if (programaAulaRepository.existsByCicloId(id)) {
+            throw new IllegalStateException("Não é possível excluir o ciclo de aulas pois existem programas de aula vinculados a ele.");
+        }
         cicloRepository.deleteById(id);
     }
 }

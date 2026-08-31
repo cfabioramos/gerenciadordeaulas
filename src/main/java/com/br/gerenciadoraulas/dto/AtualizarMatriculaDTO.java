@@ -6,6 +6,7 @@ public class AtualizarMatriculaDTO {
     private BigDecimal valor;
     private BigDecimal valorMensalidade;
     private Integer diaVencimento;
+    private Boolean flAtivo;
 
     public AtualizarMatriculaDTO() {
     }
@@ -14,6 +15,13 @@ public class AtualizarMatriculaDTO {
         this.valor = valor;
         this.valorMensalidade = valorMensalidade;
         this.diaVencimento = diaVencimento;
+    }
+
+    public AtualizarMatriculaDTO(BigDecimal valor, BigDecimal valorMensalidade, Integer diaVencimento, Boolean flAtivo) {
+        this.valor = valor;
+        this.valorMensalidade = valorMensalidade;
+        this.diaVencimento = diaVencimento;
+        this.flAtivo = flAtivo;
     }
 
     public BigDecimal getValor() {
@@ -38,5 +46,13 @@ public class AtualizarMatriculaDTO {
 
     public void setDiaVencimento(Integer diaVencimento) {
         this.diaVencimento = diaVencimento;
+    }
+
+    public Boolean getFlAtivo() {
+        return flAtivo;
+    }
+
+    public void setFlAtivo(Boolean flAtivo) {
+        this.flAtivo = flAtivo;
     }
 }

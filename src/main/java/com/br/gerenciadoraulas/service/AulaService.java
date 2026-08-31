@@ -3,6 +3,7 @@ package com.br.gerenciadoraulas.service;
 import com.br.gerenciadoraulas.dto.AulaDTO;
 import com.br.gerenciadoraulas.model.Aula;
 import com.br.gerenciadoraulas.repository.AulaRepository;
+import com.br.gerenciadoraulas.repository.PresencaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class AulaService {
 
     private final AulaRepository aulaRepository;
+    private final PresencaRepository presencaRepository;
 
-    public AulaService(AulaRepository aulaRepository) {
+    public AulaService(AulaRepository aulaRepository, PresencaRepository presencaRepository) {
         this.aulaRepository = aulaRepository;
+        this.presencaRepository = presencaRepository;
     }
 
     public List<AulaDTO> listarTodas() {
@@ -57,6 +60,9 @@ public class AulaService {
     }
 
     public void deletar(Long id) {
+        if (presencaRepository.existsByAulaId(id)) {
+            throw new IllegalStateException("Não é possível excluir a aula pois existem presenças registradas.");
+        }
         aulaRepository.deleteById(id);
     }
 

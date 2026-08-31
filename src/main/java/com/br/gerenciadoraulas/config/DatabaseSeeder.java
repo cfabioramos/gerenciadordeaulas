@@ -41,6 +41,37 @@ public class DatabaseSeeder implements CommandLineRunner {
             jdbcTemplate.execute("UPDATE usuario SET nome = 'Carlos Fábio' WHERE username = 'cfabioramos' AND (nome IS NULL OR nome = '')");
             jdbcTemplate.execute("UPDATE usuario SET nome = 'Carlos Fábio R' WHERE username = 'cfabioramos.remote' AND (nome IS NULL OR nome = '')");
 
+            try {
+                jdbcTemplate.execute("UPDATE matricula SET fl_ativo = true WHERE fl_ativo IS NULL");
+            } catch (Exception ex) {
+                System.err.println("Aviso migração matricula fl_ativo: " + ex.getMessage());
+            }
+
+            // Atualiza chaves estrangeiras para ON DELETE RESTRICT (evitando cascade delete)
+            try {
+                jdbcTemplate.execute("ALTER TABLE presenca DROP CONSTRAINT IF EXISTS fk_presenca_aula");
+                jdbcTemplate.execute("ALTER TABLE presenca ADD CONSTRAINT fk_presenca_aula FOREIGN KEY (aula_id) REFERENCES aula (id) ON DELETE RESTRICT");
+            } catch (Exception ex) {
+                System.err.println("Aviso migração presenca FK: " + ex.getMessage());
+            }
+
+            try {
+                jdbcTemplate.execute("ALTER TABLE aula DROP CONSTRAINT IF EXISTS fk_aula_ciclo");
+                jdbcTemplate.execute("ALTER TABLE aula DROP CONSTRAINT IF EXISTS fk_aula_programaaula");
+                jdbcTemplate.execute("ALTER TABLE aula DROP CONSTRAINT IF EXISTS fk_aula_programa_aula");
+                jdbcTemplate.execute("ALTER TABLE aula ADD CONSTRAINT fk_aula_programaaula FOREIGN KEY (programaaula_id) REFERENCES programa_aula (id) ON DELETE RESTRICT");
+            } catch (Exception ex) {
+                System.err.println("Aviso migração aula FK: " + ex.getMessage());
+            }
+
+            try {
+                jdbcTemplate.execute("ALTER TABLE programa_aula DROP CONSTRAINT IF EXISTS fk_programaaula_ciclo");
+                jdbcTemplate.execute("ALTER TABLE programa_aula DROP CONSTRAINT IF EXISTS fk_programa_aula_ciclo");
+                jdbcTemplate.execute("ALTER TABLE programa_aula ADD CONSTRAINT fk_programaaula_ciclo FOREIGN KEY (ciclo_id) REFERENCES ciclo (id) ON DELETE RESTRICT");
+            } catch (Exception ex) {
+                System.err.println("Aviso migração programa_aula FK: " + ex.getMessage());
+            }
+
             if (usuarioRepository.count() == 0) {
                 seedUsers();
             }
