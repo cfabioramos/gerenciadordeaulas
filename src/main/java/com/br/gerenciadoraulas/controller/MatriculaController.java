@@ -63,14 +63,27 @@ public class MatriculaController {
             matricula.setValor(dto.getValor());
             matricula.setValorMensalidade(dto.getValorMensalidade());
             matricula.setDiaVencimento(dto.getDiaVencimento());
+            if (dto.getFlAtivo() != null) {
+                matricula.setFlAtivo(dto.getFlAtivo());
+            }
             MatriculaDTO updated = this.matriculaService.salvar(matricula);
             return ResponseEntity.ok(updated);
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    @PatchMapping("/{id}/status")
-    public ResponseEntity<Void> atualizarStatus(@PathVariable Long id, @RequestParam Boolean ativo) {
-        this.matriculaService.atualizarStatus(id, ativo);
+    @RequestMapping(value = "/{id}/status", method = {RequestMethod.PATCH, RequestMethod.PUT})
+    public ResponseEntity<Void> atualizarStatus(
+            @PathVariable Long id,
+            @RequestParam(required = false) Boolean ativo,
+            @RequestBody(required = false) java.util.Map<String, Object> body) {
+        Boolean novoStatus = ativo;
+        if (novoStatus == null && body != null) {
+            Object val = body.get("ativo");
+            if (val == null) val = body.get("flAtivo");
+            if (val instanceof Boolean) novoStatus = (Boolean) val;
+            else if (val != null) novoStatus = Boolean.parseBoolean(val.toString());
+        }
+        this.matriculaService.atualizarStatus(id, novoStatus != null ? novoStatus : true);
         return ResponseEntity.ok().build();
     }
 

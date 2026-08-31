@@ -15,4 +15,7 @@ public interface PresencaRepository extends JpaRepository<Presenca, Long> {
     @Transactional
     @Query("delete from Presenca p where p.matricula.id = :matriculaId and p.aula.id = :aulaId")
     void deleteByMatriculaIdAndAulaId(@Param("matriculaId") Long matriculaId, @Param("aulaId") Long aulaId);
+
+    // Verifica se existem Presenças vinculadas à Aula
+    boolean existsByAulaId(Long aulaId);
 }

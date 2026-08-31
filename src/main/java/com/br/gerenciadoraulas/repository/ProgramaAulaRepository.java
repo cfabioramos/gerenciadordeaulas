@@ -11,4 +11,7 @@ public interface ProgramaAulaRepository extends JpaRepository<ProgramaAula, Long
 
     // Retorna a lista de Programas de Aula pelo id do Ciclo associado
     List<ProgramaAula> findByCicloId(Long cicloId);
+
+    // Verifica se existem Programas de Aula vinculados ao Ciclo
+    boolean existsByCicloId(Long cicloId);
 }

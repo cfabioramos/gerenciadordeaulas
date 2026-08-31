@@ -19,4 +19,6 @@ public interface AulaRepository extends JpaRepository<Aula, Long> {
     // Buscar todas as aulas de um ProgramaAula
     List<Aula> findByProgramaAulaId(Long programaAulaId);
 
+    // Verifica se existem Aulas vinculadas ao ProgramaAula
+    boolean existsByProgramaAulaId(Long programaAulaId);
 }

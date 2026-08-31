@@ -2,6 +2,7 @@ package com.br.gerenciadoraulas.service;
 
 import com.br.gerenciadoraulas.dto.ProgramaAulaDTO;
 import com.br.gerenciadoraulas.model.ProgramaAula;
+import com.br.gerenciadoraulas.repository.AulaRepository;
 import com.br.gerenciadoraulas.repository.ProgramaAulaRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class ProgramaAulaService {
 
     private final ProgramaAulaRepository programaAulaRepository;
+    private final AulaRepository aulaRepository;
 
-    public ProgramaAulaService(ProgramaAulaRepository programaAulaRepository) {
+    public ProgramaAulaService(ProgramaAulaRepository programaAulaRepository, AulaRepository aulaRepository) {
         this.programaAulaRepository = programaAulaRepository;
+        this.aulaRepository = aulaRepository;
     }
 
     public List<ProgramaAulaDTO> listarTodas() {
@@ -47,6 +50,9 @@ public class ProgramaAulaService {
     }
 
     public void deletar(Long id) {
+        if (aulaRepository.existsByProgramaAulaId(id)) {
+            throw new IllegalStateException("Não é possível excluir o programa de aulas pois existem aulas vinculadas a ele.");
+        }
         programaAulaRepository.deleteById(id);
     }
 

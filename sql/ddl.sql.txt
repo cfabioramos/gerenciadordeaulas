@@ -1,4 +1,12 @@
 -- ============================
+-- TABELA: Tipo_Aula
+-- ============================
+CREATE TABLE tipo_aula (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+-- ============================
 -- TABELA: Ciclo
 -- ============================
 CREATE TABLE ciclo (
@@ -9,15 +17,28 @@ CREATE TABLE ciclo (
 );
 
 -- ============================
+-- TABELA: Programa_Aula
+-- Cada programa de aula pertence a um ciclo
+-- ============================
+CREATE TABLE programa_aula (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    ciclo_id INT NOT NULL,
+    tipoaula_id INT,
+    CONSTRAINT fk_programaaula_ciclo FOREIGN KEY (ciclo_id) REFERENCES ciclo (id) ON DELETE RESTRICT,
+    CONSTRAINT fk_programaaula_tipoaula FOREIGN KEY (tipoaula_id) REFERENCES tipo_aula (id) ON DELETE RESTRICT
+);
+
+-- ============================
 -- TABELA: Aula
--- Cada aula pertence a um ciclo (* x 1)
+-- Cada aula pertence a um programa de aula
 -- ============================
 CREATE TABLE aula (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    data DATE NOT NULL,
-    ciclo_id INT NOT NULL,
-    CONSTRAINT fk_aula_ciclo FOREIGN KEY (ciclo_id) REFERENCES ciclo (id) ON DELETE CASCADE
+    data TIMESTAMP NOT NULL,
+    programaaula_id INT NOT NULL,
+    CONSTRAINT fk_aula_programaaula FOREIGN KEY (programaaula_id) REFERENCES programa_aula (id) ON DELETE RESTRICT
 );
 
 -- ============================
@@ -54,34 +75,10 @@ CREATE TABLE presenca (
     id SERIAL PRIMARY KEY,
     aula_id INT NOT NULL,
     matricula_id INT NOT NULL,
-    CONSTRAINT fk_presenca_aula FOREIGN KEY (aula_id) REFERENCES aula (id) ON DELETE CASCADE,
+    CONSTRAINT fk_presenca_aula FOREIGN KEY (aula_id) REFERENCES aula (id) ON DELETE RESTRICT,
     CONSTRAINT fk_presenca_matricula FOREIGN KEY (matricula_id) REFERENCES matricula (id),
     CONSTRAINT uq_presenca UNIQUE (aula_id, matricula_id) -- evita duplicidade
 );
-
--- ============================
--- EXEMPLOS DE INSERÇÃO
--- ============================
-
--- Ciclo
-INSERT INTO ciclo (nome, data_inicio, data_fim)
-VALUES ('3/2026 UFBA', '2026-07-01', '2026-10-31');
-
--- Aula
-INSERT INTO aula (nome, data, ciclo_id)
-VALUES ('UFBA Sábado 01/08', '2026-08-01', 1);
-
--- Aluno
-INSERT INTO aluno (nome)
-VALUES ('Carlos Fábio');
-
--- Matrícula
-INSERT INTO matricula (aluno_id, ciclo_id, data)
-VALUES (1, 1, CURRENT_DATE);
-
--- Presença
-INSERT INTO presenca (aula_id, matricula_id)
-VALUES (1, 1);
 
 -- ============================
 -- TABELA: Pagamento
@@ -112,11 +109,7 @@ CREATE TABLE usuario (
     username VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    admin BOOLEAN NOT NULL
+    admin BOOLEAN NOT NULL,
+    theme VARCHAR(50) DEFAULT 'nordeste' NOT NULL,
+    nome VARCHAR(100)
 );
-
--- EXEMPLOS DE INSERÇÃO PARA USUÁRIOS (com senhas criptografadas ou placeholders para DDL)
--- Marcos Affonso (marcosaffonsodanca123)
--- Carlos Fábio Ramos (caramilt05)
--- Carlos Fábio Ramos Remote (caramilt05)
-
