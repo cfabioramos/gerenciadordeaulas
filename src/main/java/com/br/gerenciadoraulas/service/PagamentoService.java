@@ -10,9 +10,11 @@ import com.br.gerenciadoraulas.repository.MatriculaRepository;
 import com.br.gerenciadoraulas.repository.PagamentoMatriculaRepository;
 import com.br.gerenciadoraulas.repository.PagamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,6 +69,29 @@ public class PagamentoService {
     @Transactional(readOnly = true)
     public List<PagamentoDTO> listarPorAluno(Long alunoId) {
         return pagamentoRepository.findByAlunoId(alunoId).stream()
+                .map(PagamentoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<PagamentoDTO> listarTodos(LocalDate inicio, LocalDate fim, Long alunoId, Long cicloId) {
+        List<Pagamento> todos = pagamentoRepository.findAll(Sort.by(Sort.Direction.ASC, "data"));
+        return todos.stream()
+                .filter(p -> {
+                    if (inicio != null && p.getData() != null && p.getData().isBefore(inicio)) return false;
+                    if (fim != null && p.getData() != null && p.getData().isAfter(fim)) return false;
+                    if (alunoId != null) {
+                        boolean hasAluno = p.getPagamentoMatriculas().stream()
+                                .anyMatch(pm -> pm.getMatricula() != null && pm.getMatricula().getAluno() != null && alunoId.equals(pm.getMatricula().getAluno().getId()));
+                        if (!hasAluno) return false;
+                    }
+                    if (cicloId != null) {
+                        boolean hasCiclo = p.getPagamentoMatriculas().stream()
+                                .anyMatch(pm -> pm.getMatricula() != null && pm.getMatricula().getProgramaAula() != null && pm.getMatricula().getProgramaAula().getCiclo() != null && cicloId.equals(pm.getMatricula().getProgramaAula().getCiclo().getId()));
+                        if (!hasCiclo) return false;
+                    }
+                    return true;
+                })
                 .map(PagamentoDTO::new)
                 .collect(Collectors.toList());
     }
