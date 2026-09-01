@@ -33,7 +33,7 @@ public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
             JOIN m.programaAula pa
             JOIN Aula au ON au.programaAula.id = pa.id
             LEFT JOIN Presenca p ON p.matricula.id = m.id AND p.aula.id = :aulaId
-            WHERE au.id = :aulaId AND (m.flAtivo IS NULL OR m.flAtivo = true OR p.id IS NOT NULL)
+            WHERE au.id = :aulaId
             """)
     List<MatriculaDTO> consultarMatriculasPorAula(@Param("aulaId") Long aulaId);
 
