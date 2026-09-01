@@ -37,15 +37,14 @@ public class PagamentoDTO {
                     .map(PagamentoMatriculaDTO::new)
                     .collect(Collectors.toList());
 
-            if (!pagamento.getPagamentoMatriculas().isEmpty()) {
-                PagamentoMatricula firstPm = pagamento.getPagamentoMatriculas().get(0);
-                Matricula matricula = firstPm.getMatricula();
+            for (PagamentoMatricula pm : pagamento.getPagamentoMatriculas()) {
+                Matricula matricula = pm.getMatricula();
                 if (matricula != null) {
-                    if (matricula.getAluno() != null) {
+                    if (this.alunoId == null && matricula.getAluno() != null) {
                         this.alunoId = matricula.getAluno().getId();
                         this.alunoNome = matricula.getAluno().getNome();
                     }
-                    if (matricula.getProgramaAula() != null && matricula.getProgramaAula().getCiclo() != null) {
+                    if (this.cicloId == null && matricula.getProgramaAula() != null && matricula.getProgramaAula().getCiclo() != null) {
                         this.cicloId = matricula.getProgramaAula().getCiclo().getId();
                         this.cicloNome = matricula.getProgramaAula().getCiclo().getNome();
                     }
