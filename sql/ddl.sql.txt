@@ -113,3 +113,56 @@ CREATE TABLE usuario (
     theme VARCHAR(50) DEFAULT 'nordeste' NOT NULL,
     nome VARCHAR(100)
 );
+
+-- ============================
+-- TABELA: Evento
+-- ============================
+CREATE TABLE evento (
+    id BIGSERIAL PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    tipo VARCHAR(20) NOT NULL,
+    data_inicio TIMESTAMP NOT NULL,
+    data_fim TIMESTAMP,
+    horario_inicio VARCHAR(5),
+    horario_fim VARCHAR(5),
+    local VARCHAR(100),
+    status VARCHAR(20) DEFAULT 'AGENDADO',
+    participantes_qtd INTEGER DEFAULT 0
+);
+
+-- ============================
+-- TABELA: Participante
+-- ============================
+CREATE TABLE participante (
+    id BIGSERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    evento_id BIGINT NOT NULL,
+    CONSTRAINT fk_participante_evento FOREIGN KEY (evento_id) REFERENCES evento (id) ON DELETE CASCADE
+);
+
+-- ============================
+-- TABELA: Receita
+-- ============================
+CREATE TABLE receita (
+    id BIGSERIAL PRIMARY KEY,
+    descricao VARCHAR(100) NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    evento_id BIGINT,
+    participante_id BIGINT,
+    data_lancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_receita_evento FOREIGN KEY (evento_id) REFERENCES evento (id) ON DELETE SET NULL,
+    CONSTRAINT fk_receita_participante FOREIGN KEY (participante_id) REFERENCES participante (id) ON DELETE SET NULL
+);
+
+-- ============================
+-- TABELA: Despesa
+-- ============================
+CREATE TABLE despesa (
+    id BIGSERIAL PRIMARY KEY,
+    descricao VARCHAR(100) NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    evento_id BIGINT,
+    data_lancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_despesa_evento FOREIGN KEY (evento_id) REFERENCES evento (id) ON DELETE SET NULL
+);
