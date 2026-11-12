@@ -32,6 +32,15 @@ public class EventoController {
         return eventoService.salvar(evento);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Evento> atualizar(@PathVariable Long id, @RequestBody Evento evento) {
+        try {
+            return ResponseEntity.ok(eventoService.atualizar(id, evento));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         eventoService.deletar(id);

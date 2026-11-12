@@ -1,5 +1,6 @@
 package com.br.gerenciadoraulas.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,8 @@ public class Participante {
     @Column(nullable = false, length = 100)
     private String nome;
 
+    // Evita recursão infinita no JSON (evento -> participantes -> evento -> ...)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evento_id", nullable = false)
     private Evento evento;

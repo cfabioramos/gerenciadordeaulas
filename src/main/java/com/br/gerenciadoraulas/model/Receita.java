@@ -1,5 +1,6 @@
 package com.br.gerenciadoraulas.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,6 +19,8 @@ public class Receita {
     @Column(name = "valor", precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 
+    // Evita recursão infinita no JSON (evento -> receitas -> evento -> ...)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evento_id")
     private Evento evento;
