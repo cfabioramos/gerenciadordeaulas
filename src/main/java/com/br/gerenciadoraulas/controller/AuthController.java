@@ -23,7 +23,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
-        String usernameOrEmail = credentials.get("usernameOrEmail");
+            String usernameOrEmail = credentials.get("usernameOrEmail");
         String password = credentials.get("password");
 
         if (usernameOrEmail == null || password == null) {

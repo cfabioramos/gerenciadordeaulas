@@ -166,3 +166,15 @@ CREATE TABLE despesa (
     data_lancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_despesa_evento FOREIGN KEY (evento_id) REFERENCES evento (id) ON DELETE SET NULL
 );
+
+-- ============================
+-- TABELA: Evento_Dia
+-- Dias e horários de realização de um Evento (1 ou mais dias)
+-- ============================
+CREATE TABLE evento_dia (
+    id BIGSERIAL PRIMARY KEY,
+    evento_id BIGINT NOT NULL,
+    data_evento DATE NOT NULL,
+    horario VARCHAR(5) NOT NULL,
+    CONSTRAINT fk_evento_dia_evento FOREIGN KEY (evento_id) REFERENCES evento (id) ON DELETE CASCADE
+);
