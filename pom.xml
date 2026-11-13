@@ -28,6 +28,11 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<jacoco.version>0.8.13</jacoco.version>
+		<!-- Pisos de cobertura (ratio 0..1). Baseline da Fase 0; elevar nas fases seguintes. -->
+		<coverage.line.minimum>0.70</coverage.line.minimum>
+		<coverage.branch.minimum>0.60</coverage.branch.minimum>
+		<pitest.version>1.17.1</pitest.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -53,6 +58,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Banco em memória para testes (profile "test"), sem tocar no Neon -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<!-- Source: https://mvnrepository.com/artifact/org.postgresql/postgresql -->
@@ -90,6 +101,93 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>${pitest.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.2.2</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetClasses>
+						<param>com.br.gerenciadoraulas.service.*</param>
+						<param>com.br.gerenciadoraulas.controller.*</param>
+						<param>com.br.gerenciadoraulas.config.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>com.br.gerenciadoraulas.*Test</param>
+					</targetTests>
+					<mutators>
+						<mutator>DEFAULTS</mutator>
+					</mutators>
+					<outputFormats>
+						<outputFormat>HTML</outputFormat>
+						<outputFormat>XML</outputFormat>
+					</outputFormats>
+					<threads>2</threads>
+					<timestampedReports>false</timestampedReports>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<configuration>
+					<!-- Código sem lógica própria: acessores de entidades/DTOs,
+					     classe main e configuração de documentação. -->
+					<excludes>
+						<exclude>com/br/gerenciadoraulas/GerenciadoraulasApplication.class</exclude>
+						<exclude>com/br/gerenciadoraulas/model/**</exclude>
+						<exclude>com/br/gerenciadoraulas/dto/**</exclude>
+						<exclude>com/br/gerenciadoraulas/config/SwaggerConfig.class</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>BUNDLE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${coverage.line.minimum}</minimum>
+										</limit>
+										<limit>
+											<counter>BRANCH</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${coverage.branch.minimum}</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
