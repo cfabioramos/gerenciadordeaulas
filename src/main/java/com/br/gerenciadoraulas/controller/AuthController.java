@@ -4,6 +4,7 @@ import com.br.gerenciadoraulas.config.JwtTokenProvider;
 import com.br.gerenciadoraulas.model.Usuario;
 import com.br.gerenciadoraulas.repository.UsuarioRepository;
 import org.mindrot.jbcrypt.BCrypt;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class AuthController {
         this.usuarioRepository = usuarioRepository;
     }
 
+    @Operation(summary = "Realiza login e retorna o token JWT", security = {})
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
             String usernameOrEmail = credentials.get("usernameOrEmail");

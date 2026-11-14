@@ -32,6 +32,27 @@ class JwtInterceptorTest {
     }
 
     @Test
+    void rotaLoginPermitidaSemToken() throws Exception {
+        request.setMethod("POST");
+        request.setRequestURI("/auth/login");
+        assertTrue(interceptor.preHandle(request, response, new Object()));
+    }
+
+    @Test
+    void rotaLoginComBarraPermitidaSemToken() throws Exception {
+        request.setMethod("POST");
+        request.setRequestURI("/auth/login/");
+        assertTrue(interceptor.preHandle(request, response, new Object()));
+    }
+
+    @Test
+    void rotaSwaggerPermitidaSemToken() throws Exception {
+        request.setMethod("GET");
+        request.setRequestURI("/swagger-ui/index.html");
+        assertTrue(interceptor.preHandle(request, response, new Object()));
+    }
+
+    @Test
     void semHeaderRetorna401() throws Exception {
         request.setMethod("GET");
         request.setRequestURI("/alunos");

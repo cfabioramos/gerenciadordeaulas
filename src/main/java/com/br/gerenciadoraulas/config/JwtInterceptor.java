@@ -16,6 +16,13 @@ public class JwtInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        // Permite login e rotas de documentação sem token
+        String uri = request.getRequestURI();
+        if (uri.endsWith("/auth/login") || uri.endsWith("/auth/login/") ||
+            uri.contains("/swagger-ui") || uri.contains("/v3/api-docs")) {
+            return true;
+        }
+
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -36,7 +43,6 @@ public class JwtInterceptor implements HandlerInterceptor {
 
             // Restringe escrita para administradores (exceto atualização de tema do próprio usuário)
             String method = request.getMethod();
-            String uri = request.getRequestURI();
             boolean isThemeUpdate = "/auth/theme".equalsIgnoreCase(uri) || uri.endsWith("/auth/theme");
 
             if (!isThemeUpdate && 
