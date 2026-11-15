@@ -362,5 +362,7 @@ da aula indicada (tabela aula, variável aulaId).
 Incluir um atributo boleano com indicação da presença (tabela presença)
 do aluno na aula (tabela aula, variável aulaId).
 
-
-
+CONFIGURAÇÕES GOOGLE CLOUD
+URIs SERVIÇO:
+https://gerenciadordeaulas-srv-363632465943.us-central1.run.app
+https://meugerenciadordepresencas.cloud.run
